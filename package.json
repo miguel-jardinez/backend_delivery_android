@@ -28,13 +28,19 @@
     "@nestjs/mapped-types": "*",
     "@nestjs/passport": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/typeorm": "^9.0.1",
+    "argon2": "^0.29.1",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.13.2",
     "passport": "^0.6.0",
     "passport-headerapikey": "^1.2.2",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
+    "pg": "^8.8.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^7.2.0"
+    "rxjs": "^7.2.0",
+    "typeorm": "^0.3.10"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.0.0",
@@ -64,6 +70,9 @@
     "typescript": "^4.7.4"
   },
   "jest": {
+    "setupFiles": [
+      "<rootDir>../.jest/setEnvVars.js"
+    ],
     "moduleFileExtensions": [
       "js",
       "json",
@@ -75,7 +84,8 @@
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "collectCoverageFrom": [
-      "**/*.(t|j)s"
+      "**/*.(t|j)s",
+      "!**/*.module.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"

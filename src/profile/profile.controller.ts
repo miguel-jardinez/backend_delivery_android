@@ -1,7 +1,6 @@
 import {
   Controller,
   Get,
-  Post,
   Body,
   Patch,
   Param,
@@ -9,7 +8,6 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ProfileService } from './profile.service';
-import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
@@ -17,17 +15,7 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 export class ProfileController {
   constructor(private readonly profileService: ProfileService) {}
 
-  @Post()
-  create(@Body() createProfileDto: CreateProfileDto) {
-    return this.profileService.create(createProfileDto);
-  }
-
   @UseGuards(JwtAuthGuard)
-  @Get()
-  findAll() {
-    return this.profileService.findAll();
-  }
-
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.profileService.findOne(+id);

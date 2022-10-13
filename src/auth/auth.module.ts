@@ -9,6 +9,7 @@ import { jwtConstants } from './constans';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { HeaderApiKeyStrategy } from './strategies/api-key.strategy';
 import { ConfigService } from '@nestjs/config';
+import { PasswordService } from '../utils/password/password.service';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { ConfigService } from '@nestjs/config';
     }),
   ],
   providers: [
+    PasswordService,
     AuthService,
     LocalStrategy,
     JwtStrategy,

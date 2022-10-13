@@ -1,10 +1,30 @@
-import { Controller, Post, Request, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  ClassSerializerInterceptor,
+  Controller,
+  Get,
+  Post,
+  Request,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { AuthService } from './auth.service';
+import { UserService } from '../user/user.service';
+import { RegisterUserDto } from '../user/dto/registerUser.dto';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private userService: UserService,
+  ) {}
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Get('users')
+  async getAllUsers() {
+    return this.userService.findAllUsers();
+  }
 
   @UseGuards(LocalAuthGuard)
   @Post('login')
@@ -12,8 +32,9 @@ export class AuthController {
     return this.authService.login(req.user);
   }
 
+  @UseInterceptors(ClassSerializerInterceptor)
   @Post('register')
-  async register(@Request() req) {
-    return req.user;
+  async register(@Body() createUserDto: RegisterUserDto) {
+    return this.userService.createUser(createUserDto);
   }
 }
